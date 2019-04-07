@@ -113,8 +113,8 @@ $(document).ready(function() {
   sidebarToggleLines.push(sidebarToggleLine2nd);
   sidebarToggleLines.push(sidebarToggleLine3rd);
 
-  var SIDEBAR_WIDTH = CONFIG.sidebar.width ? CONFIG.sidebar.width : '290px';
-  var SIDEBAR_DISPLAY_DURATION = 200;
+  var SIDEBAR_WIDTH = CONFIG.sidebar.width ? CONFIG.sidebar.width : '280px';
+  var SIDEBAR_DISPLAY_DURATION = 80;
   var xPos, yPos;
 
   var sidebarToggleMotion = {
