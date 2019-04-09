@@ -445,11 +445,11 @@ body {
 .header-inner {
   margin: 0 auto;
   padding: 100px 0 70px;
-  width: 650px;
+  width: 750px;
 }
 @media (min-width: 1200px) {
   .container .header-inner {
-    width: 850px;
+    width: 950px;
   }
 }
 @media (min-width: 1600px) {
@@ -459,11 +459,11 @@ body {
 }
 .main-inner {
   margin: 0 auto;
-  width: 650px;
+  width: 750px;
 }
 @media (min-width: 1200px) {
   .container .main-inner {
-    width: 850px;
+    width: 950px;
   }
 }
 @media (min-width: 1600px) {
@@ -477,11 +477,11 @@ body {
 .footer-inner {
   box-sizing: border-box;
   margin: 0px auto;
-  width: 650px;
+  width: 750px;
 }
 @media (min-width: 1200px) {
   .container .footer-inner {
-    width: 850px;
+    width: 950px;
   }
 }
 @media (min-width: 1600px) {
@@ -1768,7 +1768,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #85ff65;
+  background: #0beeff;
 }
 .feed-link,
 .chat {
@@ -2476,7 +2476,7 @@ hr {
 .logo-line-after i {
   position: relative;
   display: block;
-  height: 2px;
+  height: 3.5px;
   background: #222;
 }
 @media (max-width: 767px) {
