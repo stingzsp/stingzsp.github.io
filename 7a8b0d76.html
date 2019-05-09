@@ -145,19 +145,19 @@
 
 
 
-  <meta name="description" content="摘要针对台湾某银行信用卡的数据，构建一个分析信用卡违约率的分类器。采用Random Forest算法，信用卡违约率识别率在80%左右。 背景首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。本文信用卡违约率分析即针对银行信用卡的数据集，构建一个分析信用卡违约率的分类器，预测用">
+  <meta name="description" content="摘要针对台湾某银行信用卡的数据，采用scikit-learn中的pipeline机制创建5个分类器并寻找最优参数，选择准确率最高的CART分类器，信用卡违约率识别率在81.9%左右。 背景首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。本文信用卡违约率分析即针对银行信用卡的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="信用卡违约率分析">
 <meta property="og:url" content="http://yoursite.com/7a8b0d76.html">
 <meta property="og:site_name" content="Sting的笔记">
-<meta property="og:description" content="摘要针对台湾某银行信用卡的数据，构建一个分析信用卡违约率的分类器。采用Random Forest算法，信用卡违约率识别率在80%左右。 背景首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。本文信用卡违约率分析即针对银行信用卡的数据集，构建一个分析信用卡违约率的分类器，预测用">
+<meta property="og:description" content="摘要针对台湾某银行信用卡的数据，采用scikit-learn中的pipeline机制创建5个分类器并寻找最优参数，选择准确率最高的CART分类器，信用卡违约率识别率在81.9%左右。 背景首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。本文信用卡违约率分析即针对银行信用卡的">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/0060lm7Tly1g24ylsnptvj30dl0hsq31.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/0060lm7Tly1g25e4lemysj30b00b0dfr.jpg">
-<meta property="og:updated_time" content="2019-04-17T02:09:07.792Z">
+<meta property="og:updated_time" content="2019-05-07T15:23:06.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="信用卡违约率分析">
-<meta name="twitter:description" content="摘要针对台湾某银行信用卡的数据，构建一个分析信用卡违约率的分类器。采用Random Forest算法，信用卡违约率识别率在80%左右。 背景首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。本文信用卡违约率分析即针对银行信用卡的数据集，构建一个分析信用卡违约率的分类器，预测用">
+<meta name="twitter:description" content="摘要针对台湾某银行信用卡的数据，采用scikit-learn中的pipeline机制创建5个分类器并寻找最优参数，选择准确率最高的CART分类器，信用卡违约率识别率在81.9%左右。 背景首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。本文信用卡违约率分析即针对银行信用卡的">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/large/0060lm7Tly1g24ylsnptvj30dl0hsq31.jpg">
 
 
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-17 10:09:07" itemprop="dateModified" datetime="2019-04-17T10:09:07+08:00">2019-04-17</time>
+                <time title="修改时间：2019-05-07 23:23:06" itemprop="dateModified" datetime="2019-05-07T23:23:06+08:00">2019-05-07</time>
               
             
           </span>
@@ -482,7 +482,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.9k</span>
+                <span title="本文字数">5.2k</span>
               
 
               
@@ -496,7 +496,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -516,7 +516,7 @@
       
 
       
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>针对台湾某银行信用卡的数据，构建一个分析信用卡违约率的分类器。采用Random Forest算法，信用卡违约率识别率在80%左右。</p>
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>针对台湾某银行信用卡的数据，采用scikit-learn中的pipeline机制创建5个分类器并寻找最优参数，选择准确率最高的CART分类器，信用卡违约率识别率在81.9%左右。</p>
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>首先理解业务，什么是信用卡违约？信用卡违约行为一般是指持卡人未按约定在到期还款日（含）前偿还最低还款额。为什么要分析信用卡违约率？银行需要把控风控标准来降低信用卡债危机趋势。<br>本文信用卡违约率分析即针对银行信用卡的数据集，构建一个分析信用卡违约率的分类器，预测用户是否会发生违约行为。</p>
 <h1 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h1><h2 id="数据集信息"><a href="#数据集信息" class="headerlink" title="数据集信息"></a>数据集信息</h2><p>本项目数据集是台湾某银行2005年4月到9月的信用卡数据，来源于kaggle。<br>数据来源：<br><a href="https://www.kaggle.com/uciml/default-of-credit-card-clients-dataset/version/1" target="_blank" rel="noopener">https://www.kaggle.com/uciml/default-of-credit-card-clients-dataset/version/1</a></p>
 <h2 id="理解数据集中的字段含义"><a href="#理解数据集中的字段含义" class="headerlink" title="理解数据集中的字段含义"></a>理解数据集中的字段含义</h2><p>数据集一共包括25个字段，具体含义如下：</p>
@@ -635,8 +635,8 @@
 <p><img src="http://wx1.sinaimg.cn/large/0060lm7Tly1g25e4lemysj30b00b0dfr.jpg" alt></p>
 <h2 id="特征处理"><a href="#特征处理" class="headerlink" title="特征处理"></a>特征处理</h2><p>ID字段对目标结果无影响，去除该字段；default.payment.next.month作为判断结果的字段。<br>因为数据集中没有专门的测试集，所以使用 train_test_split将数据集中的30%作为测试集，其余作为训练集。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#特征处理</span></span><br><span class="line">data.drop([<span class="string">'ID'</span>],inplace=<span class="literal">True</span>,axis=<span class="number">1</span>) <span class="comment">#ID字段对目标结果无影响，去除该字段</span></span><br><span class="line">target=data[<span class="string">'default.payment.next.month'</span>].values</span><br><span class="line">columns=data.columns.tolist()</span><br><span class="line">columns.remove(<span class="string">'default.payment.next.month'</span>)  <span class="comment">#去除结果字段</span></span><br><span class="line">features=data[columns].values  <span class="comment">#保留的特征</span></span><br><span class="line"><span class="comment">#将数据集中的30%作为测试集，其余作为训练集</span></span><br><span class="line">train_x,test_x,train_y,test_y=train_test_split(features,target,test_size=<span class="number">0.3</span>,stratify=target,random_state=<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
 <h2 id="分类阶段"><a href="#分类阶段" class="headerlink" title="分类阶段"></a>分类阶段</h2><p>在该阶段把构建模型于模型评估部分放在一起。因为我们可以用Pipeline管道机制，将数据规范化设置为第一步，分类为第二步。目前我们不知道采用哪个分类器效果更好，因此，同时采用了SVM（支持向量机）、决策树、Random Forest（随机森林）和KNN（最近邻）。然后通过GridSearchCV工具，找到每个分类器的最优参数和最优分数，最终找到适合这个项目的分类器和该分类器的参数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#构造分类器</span></span><br><span class="line">classifiers=[</span><br><span class="line">    SVC(random_state=<span class="number">1</span>,kernel=<span class="string">'rbf'</span>),</span><br><span class="line">    DecisionTreeClassifier(random_state=<span class="number">1</span>,criterion=<span class="string">'gini'</span>),</span><br><span class="line">    RandomForestClassifier(random_state=<span class="number">1</span>,criterion=<span class="string">'gini'</span>),</span><br><span class="line">    KNeighborsClassifier(metric=<span class="string">'minkowski'</span>)</span><br><span class="line">]</span><br><span class="line"><span class="comment">#the names of classifiers</span></span><br><span class="line">classifier_names=[<span class="string">'svc'</span>,<span class="string">'decisionTreeClassifier'</span>,<span class="string">'randomForestClassifier'</span>,<span class="string">'kneighborsClassifier'</span>]</span><br><span class="line"><span class="comment">#the attribution of classifier</span></span><br><span class="line">classifier_param_grid=[</span><br><span class="line">    &#123;<span class="string">'svc__C'</span>:[<span class="number">1</span>],<span class="string">'svc__gamma'</span>:[<span class="number">0.01</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'decisionTreeClassifier__max_depth'</span>:[<span class="number">4</span>,<span class="number">9</span>,<span class="number">11</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'randomForestClassifier__n_estimators'</span>:[<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'kneighborsClassifier__n_neighbors'</span>:[<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>]&#125;</span><br><span class="line">]</span><br><span class="line"><span class="comment">#利用GridSearchCV对分类器进行参数调优</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GridSearchCV_work</span><span class="params">(pipeline,train_x,train_y,test_x,test_y,param_grid,score=<span class="string">'accuracy'</span>)</span>:</span></span><br><span class="line">    response=&#123;&#125;</span><br><span class="line">    gridsearch=GridSearchCV(estimator=pipeline,param_grid=param_grid,scoring=score)</span><br><span class="line">    <span class="comment">#寻找最优的参数和最优的准确率分数</span></span><br><span class="line">    search=gridsearch.fit(train_x,train_y)</span><br><span class="line">    print(<span class="string">"GridSearch最优参数："</span>,search.best_params_)</span><br><span class="line">    print(<span class="string">"GridSearch最优分数：%0.4lf"</span> %search.best_score_)</span><br><span class="line">    predict_y=gridsearch.predict(test_x)</span><br><span class="line">    print(<span class="string">"准确率 %0.4lf"</span> %accuracy_score(test_y,predict_y))</span><br><span class="line">    response[<span class="string">'predict_y'</span>]=predict_y</span><br><span class="line">    response[<span class="string">'accuracy_score'</span>]=accuracy_score(test_y,predict_y)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> model,model_name,model_param_grid <span class="keyword">in</span> zip(classifiers,classifier_names,classfier_param_grid):</span><br><span class="line">    pipeline=Pipeline([</span><br><span class="line">        (<span class="string">'scaler'</span>,StandardScaler()),</span><br><span class="line">        (model_name,model)</span><br><span class="line">    ])</span><br><span class="line">    result=GridSearchCV_work(pipeline,train_x,train_y,test_x,test_y,model_param_grid,score=<span class="string">'accuracy'</span>)</span><br></pre></td></tr></table></figure>
-<p>得到计算结果<br>GridSearch最优参数： {‘svc__C’: 1, ‘svc__gamma’: 0.01}<br>GridSearch最优分数：0.8174<br>准确率 0.8172<br>GridSearch最优参数： {‘decisionTreeClassifier__max_depth’: 6}<br>GridSearch最优分数：0.8186<br>准确率 0.8113<br>GridSearch最优参数： {‘randomForestClassifier__n_estimators’: 6}<br>GridSearch最优分数：0.8000<br>准确率 0.7997<br>GridSearch最优参数： {‘kneighborsClassifier__n_neighbors’: 8}<br>GridSearch最优分数：0.8040<br>准确率 0.8036</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#构造分类器</span></span><br><span class="line">classifiers=[</span><br><span class="line">    SVC(random_state=<span class="number">1</span>,kernel=<span class="string">'rbf'</span>),</span><br><span class="line">    DecisionTreeClassifier(random_state=<span class="number">1</span>,criterion=<span class="string">'gini'</span>),</span><br><span class="line">    RandomForestClassifier(random_state=<span class="number">1</span>,criterion=<span class="string">'gini'</span>),</span><br><span class="line">    KNeighborsClassifier(metric=<span class="string">'minkowski'</span>)</span><br><span class="line">    AdaBoostClassifier(random_state=<span class="number">1</span>)</span><br><span class="line">]</span><br><span class="line"><span class="comment">#the names of classifiers</span></span><br><span class="line">classifier_names=[<span class="string">'svc'</span>,<span class="string">'decisionTreeClassifier'</span>,<span class="string">'randomForestClassifier'</span>,<span class="string">'kneighborsClassifier'</span>,<span class="string">'adaBoostClassifier'</span>]</span><br><span class="line"><span class="comment">#the attribution of classifier</span></span><br><span class="line">classifier_param_grid=[</span><br><span class="line">    &#123;<span class="string">'svc__C'</span>:[<span class="number">1</span>],<span class="string">'svc__gamma'</span>:[<span class="number">0.01</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'decisionTreeClassifier__max_depth'</span>:[<span class="number">4</span>,<span class="number">9</span>,<span class="number">11</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'randomForestClassifier__n_estimators'</span>:[<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'kneighborsClassifier__n_neighbors'</span>:[<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>]&#125;,</span><br><span class="line">    &#123;<span class="string">'adaBoostClassifier__n_estimators'</span>:[<span class="number">10</span>,<span class="number">50</span>,<span class="number">100</span>]&#125;</span><br><span class="line"></span><br><span class="line">]</span><br><span class="line"><span class="comment">#利用GridSearchCV对分类器进行参数调优</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GridSearchCV_work</span><span class="params">(pipeline,train_x,train_y,test_x,test_y,param_grid,score=<span class="string">'accuracy'</span>)</span>:</span></span><br><span class="line">    response=&#123;&#125;</span><br><span class="line">    gridsearch=GridSearchCV(estimator=pipeline,param_grid=param_grid,scoring=score)</span><br><span class="line">    <span class="comment">#寻找最优的参数和最优的准确率分数</span></span><br><span class="line">    search=gridsearch.fit(train_x,train_y)</span><br><span class="line">    print(<span class="string">"GridSearch最优参数："</span>,search.best_params_)</span><br><span class="line">    print(<span class="string">"GridSearch最优分数：%0.4lf"</span> %search.best_score_)</span><br><span class="line">    predict_y=gridsearch.predict(test_x)</span><br><span class="line">    print(<span class="string">"准确率 %0.4lf"</span> %accuracy_score(test_y,predict_y))</span><br><span class="line">    response[<span class="string">'predict_y'</span>]=predict_y</span><br><span class="line">    response[<span class="string">'accuracy_score'</span>]=accuracy_score(test_y,predict_y)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> model,model_name,model_param_grid <span class="keyword">in</span> zip(classifiers,classifier_names,classfier_param_grid):</span><br><span class="line">    pipeline=Pipeline([</span><br><span class="line">        (<span class="string">'scaler'</span>,StandardScaler()),</span><br><span class="line">        (model_name,model)</span><br><span class="line">    ])</span><br><span class="line">    result=GridSearchCV_work(pipeline,train_x,train_y,test_x,test_y,model_param_grid,score=<span class="string">'accuracy'</span>)</span><br></pre></td></tr></table></figure>
+<p>得到计算结果<br>GridSearch最优参数： {‘svc__C’: 1, ‘svc__gamma’: 0.01}<br>GridSearch最优分数：0.8186<br>准确率 0.8172<br>GridSearch最优参数： {‘decisionTreeClassifier__max_depth’: 4}<br>GridSearch最优分数：0.8208<br>准确率 0.8191<br>GridSearch最优参数： {‘randomForestClassifier__n_estimators’: 8}<br>GridSearch最优分数：0.8024<br>准确率 0.8036<br>GridSearch最优参数： {‘kneighborsClassifier__n_neighbors’: 8}<br>GridSearch最优分数：0.8040<br>准确率 0.8036<br>GridSearch最优参数： {‘adaBoostClassifier__n_estimators’: 10}<br>GridSearch最优分数：0.8188<br>准确率 0.8129</p>
 
       
     </div>
@@ -676,6 +676,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/5174f740.html" rel="prev" title="特征工程笔记">
+                特征工程笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -746,7 +750,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -849,7 +853,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">13k</span>
+    <span title="站点总字数">38k</span>
   
 
   
@@ -860,7 +864,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">12 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
   
 </div>
 

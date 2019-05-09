@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","width":280,"display":"always","offset":12,"onmobile":true,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要针对欧洲某银行信用卡交易数据，构建一个信用卡交易欺诈识别器。采用逻辑回归算法，通过数据可视化方式对混淆矩阵进行展示，统计模型的精确率，召回率和F1值，以及ROC曲线与AUC的值。绘制精确率和召回率的曲线关系。 项目数据来源： https:/www.kaggle.com/mlg-ulb/creditcardfraud  项目背 数据集包含由欧洲持卡人于2013年9月使用信用卡进行交的数据。此数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信用卡欺诈分析">
+<meta property="og:url" content="http://yoursite.com/3e154dd7.html">
+<meta property="og:site_name" content="Sting的笔记">
+<meta property="og:description" content="摘要针对欧洲某银行信用卡交易数据，构建一个信用卡交易欺诈识别器。采用逻辑回归算法，通过数据可视化方式对混淆矩阵进行展示，统计模型的精确率，召回率和F1值，以及ROC曲线与AUC的值。绘制精确率和召回率的曲线关系。 项目数据来源： https:/www.kaggle.com/mlg-ulb/creditcardfraud  项目背 数据集包含由欧洲持卡人于2013年9月使用信用卡进行交的数据。此数据">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/creditcard_fraud_analysis/output_6_0.png">
+<meta property="og:image" content="http://yoursite.com/creditcard_fraud_analysis/output_8_0.png">
+<meta property="og:image" content="http://yoursite.com/creditcard_fraud_analysis/output_13_0.png">
+<meta property="og:image" content="http://yoursite.com/creditcard_fraud_analysis/output_14_1.png">
+<meta property="og:image" content="http://yoursite.com/creditcard_fraud_analysis/output_15_0.png">
+<meta property="og:updated_time" content="2019-05-09T07:44:01.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="信用卡欺诈分析">
+<meta name="twitter:description" content="摘要针对欧洲某银行信用卡交易数据，构建一个信用卡交易欺诈识别器。采用逻辑回归算法，通过数据可视化方式对混淆矩阵进行展示，统计模型的精确率，召回率和F1值，以及ROC曲线与AUC的值。绘制精确率和召回率的曲线关系。 项目数据来源： https:/www.kaggle.com/mlg-ulb/creditcardfraud  项目背 数据集包含由欧洲持卡人于2013年9月使用信用卡进行交的数据。此数据">
+<meta name="twitter:image" content="http://yoursite.com/creditcard_fraud_analysis/output_6_0.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/3e154dd7">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>信用卡欺诈分析 | Sting的笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sting的笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/3e154dd7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stingzsp">
+      <meta itemprop="description" content="苟日新 日日新 又日新">
+      <meta itemprop="image" content="/images/avatar01.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sting的笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">信用卡欺诈分析
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-08 17:39:24" itemprop="dateCreated datePublished" datetime="2019-05-08T17:39:24+08:00">2019-05-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 15:44:01" itemprop="dateModified" datetime="2019-05-09T15:44:01+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">11k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">10 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>针对欧洲某银行信用卡交易数据，构建一个信用卡交易欺诈识别器。采用逻辑回归算法，通过数据可视化方式对混淆矩阵进行展示，统计模型的精确率，召回率和F1值，以及ROC曲线与AUC的值。绘制精确率和召回率的曲线关系。</p>
+<p>项目数据来源：</p>
+<p><a href="https:/www.kaggle.com/mlg-ulb/creditcardfraud" target="_blank" rel="noopener">https:/www.kaggle.com/mlg-ulb/creditcardfraud</a></p>
+<hr>
+<h2 id="项目背"><a href="#项目背" class="headerlink" title="项目背"></a>项目背</h2><blockquote>
+<p>数据集包含由欧洲持卡人于2013年9月使用信用卡进行交的数据。此数据集显示两天内发生的交易，其中284,807笔交易中有492笔被盗刷。数据集非常不平衡，积极的类（被盗刷）占所有交易的0.172％。<br>它只包含作为PCA转换结果的数字输入变量。不幸的是，由于保密问题，我们无法提供有关数据的原始功能和更多背景信息。特征V1，V2，… V28是使用PCA获得的主要组件，没有用PCA转换的唯一特征是“时间”和“量”。特征’时间’包含数据集中每个事务和第一个事务之间经过的秒数。特征“金额”是交易金额，此特征可用于实例依赖的成本认知学习。特征’类’是响应变量，如果发生被盗刷，则取值1，否则为0。</p>
+</blockquote>
+<h2 id="算法选择"><a href="#算法选择" class="headerlink" title="算法选择"></a>算法选择</h2><blockquote>
+<ul>
+<li>首先，我们拿到的数据是持卡人两天内的信用卡交易数据，这份数据包含很多维度，要解决的问题是预测持卡人是否会发生信用卡被盗刷。信用卡持卡人是否会发生被盗刷只有两种可能，发生被盗刷或不发生被盗刷。又因为这份数据是打标好的（字段Class是目标列），也就是说它是一个监督学习的场景。于是，我们判定信用卡持卡人是否会发生被盗刷是一个二元分类问题，意味着可以通过二分类相关的算法来找到具体的解决办法，本项目选用的算法是逻辑斯蒂回归（Logistic Regression）。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>分析数据：数据是结构化数据 ，不需要做特征抽象。特征V1至V28是经过PCA处理，而特征Amount的数据规格与其他特征差别较大，需要对其做特征缩放，将特征缩放至同一个规格。在数据质量方面 ，没有出现乱码或空字符的数据，可以确定字段Class为目标列，其他列为特征列。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>这份数据是全部打标好的数据，70%的数据进行训练，30%的数据进行预测和评估。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据加载</span></span><br><span class="line">df=pd.read_csv(<span class="string">'./creditcard.csv'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.info())</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 284807 entries, 0 to 284806
+Data columns (total 31 columns):
+Time      284807 non-null float64
+V1        284807 non-null float64
+V2        284807 non-null float64
+V3        284807 non-null float64
+V4        284807 non-null float64
+V5        284807 non-null float64
+V6        284807 non-null float64
+V7        284807 non-null float64
+V8        284807 non-null float64
+V9        284807 non-null float64
+V10       284807 non-null float64
+V11       284807 non-null float64
+V12       284807 non-null float64
+V13       284807 non-null float64
+V14       284807 non-null float64
+V15       284807 non-null float64
+V16       284807 non-null float64
+V17       284807 non-null float64
+V18       284807 non-null float64
+V19       284807 non-null float64
+V20       284807 non-null float64
+V21       284807 non-null float64
+V22       284807 non-null float64
+V23       284807 non-null float64
+V24       284807 non-null float64
+V25       284807 non-null float64
+V26       284807 non-null float64
+V27       284807 non-null float64
+V28       284807 non-null float64
+Amount    284807 non-null float64
+Class     284807 non-null int64
+dtypes: float64(30), int64(1)
+memory usage: 67.4 MB
+None
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.head())</span><br></pre></td></tr></table></figure>
+<pre><code>   Time        V1        V2        V3        V4        V5        V6        V7  \
+0   0.0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388  0.239599   
+1   0.0  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361 -0.078803   
+2   1.0 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499  0.791461   
+3   1.0 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203  0.237609   
+4   2.0 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921  0.592941   
+
+         V8        V9  ...         V21       V22       V23       V24  \
+0  0.098698  0.363787  ...   -0.018307  0.277838 -0.110474  0.066928   
+1  0.085102 -0.255425  ...   -0.225775 -0.638672  0.101288 -0.339846   
+2  0.247676 -1.514654  ...    0.247998  0.771679  0.909412 -0.689281   
+3  0.377436 -1.387024  ...   -0.108300  0.005274 -0.190321 -1.175575   
+4 -0.270533  0.817739  ...   -0.009431  0.798278 -0.137458  0.141267   
+
+        V25       V26       V27       V28  Amount  Class  
+0  0.128539 -0.189115  0.133558 -0.021053  149.62      0  
+1  0.167170  0.125895 -0.008983  0.014724    2.69      0  
+2 -0.327642 -0.139097 -0.055353 -0.059752  378.66      0  
+3  0.647376 -0.221929  0.062723  0.061458  123.50      0  
+4 -0.206010  0.502292  0.219422  0.215153   69.99      0  
+
+[5 rows x 31 columns]
+</code></pre><h2 id="数据探索分析（EDA）"><a href="#数据探索分析（EDA）" class="headerlink" title="数据探索分析（EDA）"></a>数据探索分析（EDA）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据探索</span></span><br><span class="line">print(df.describe())</span><br></pre></td></tr></table></figure>
+<pre><code>                Time            V1            V2            V3            V4  \
+count  284807.000000  2.848070e+05  2.848070e+05  2.848070e+05  2.848070e+05   
+mean    94813.859575  3.919560e-15  5.688174e-16 -8.769071e-15  2.782312e-15   
+std     47488.145955  1.958696e+00  1.651309e+00  1.516255e+00  1.415869e+00   
+min         0.000000 -5.640751e+01 -7.271573e+01 -4.832559e+01 -5.683171e+00   
+25%     54201.500000 -9.203734e-01 -5.985499e-01 -8.903648e-01 -8.486401e-01   
+50%     84692.000000  1.810880e-02  6.548556e-02  1.798463e-01 -1.984653e-02   
+75%    139320.500000  1.315642e+00  8.037239e-01  1.027196e+00  7.433413e-01   
+max    172792.000000  2.454930e+00  2.205773e+01  9.382558e+00  1.687534e+01   
+
+                 V5            V6            V7            V8            V9  \
+count  2.848070e+05  2.848070e+05  2.848070e+05  2.848070e+05  2.848070e+05   
+mean  -1.552563e-15  2.010663e-15 -1.694249e-15 -1.927028e-16 -3.137024e-15   
+std    1.380247e+00  1.332271e+00  1.237094e+00  1.194353e+00  1.098632e+00   
+min   -1.137433e+02 -2.616051e+01 -4.355724e+01 -7.321672e+01 -1.343407e+01   
+25%   -6.915971e-01 -7.682956e-01 -5.540759e-01 -2.086297e-01 -6.430976e-01   
+50%   -5.433583e-02 -2.741871e-01  4.010308e-02  2.235804e-02 -5.142873e-02   
+75%    6.119264e-01  3.985649e-01  5.704361e-01  3.273459e-01  5.971390e-01   
+max    3.480167e+01  7.330163e+01  1.205895e+02  2.000721e+01  1.559499e+01   
+
+           ...                 V21           V22           V23           V24  \
+count      ...        2.848070e+05  2.848070e+05  2.848070e+05  2.848070e+05   
+mean       ...        1.537294e-16  7.959909e-16  5.367590e-16  4.458112e-15   
+std        ...        7.345240e-01  7.257016e-01  6.244603e-01  6.056471e-01   
+min        ...       -3.483038e+01 -1.093314e+01 -4.480774e+01 -2.836627e+00   
+25%        ...       -2.283949e-01 -5.423504e-01 -1.618463e-01 -3.545861e-01   
+50%        ...       -2.945017e-02  6.781943e-03 -1.119293e-02  4.097606e-02   
+75%        ...        1.863772e-01  5.285536e-01  1.476421e-01  4.395266e-01   
+max        ...        2.720284e+01  1.050309e+01  2.252841e+01  4.584549e+00   
+
+                V25           V26           V27           V28         Amount  \
+count  2.848070e+05  2.848070e+05  2.848070e+05  2.848070e+05  284807.000000   
+mean   1.453003e-15  1.699104e-15 -3.660161e-16 -1.206049e-16      88.349619   
+std    5.212781e-01  4.822270e-01  4.036325e-01  3.300833e-01     250.120109   
+min   -1.029540e+01 -2.604551e+00 -2.256568e+01 -1.543008e+01       0.000000   
+25%   -3.171451e-01 -3.269839e-01 -7.083953e-02 -5.295979e-02       5.600000   
+50%    1.659350e-02 -5.213911e-02  1.342146e-03  1.124383e-02      22.000000   
+75%    3.507156e-01  2.409522e-01  9.104512e-02  7.827995e-02      77.165000   
+max    7.519589e+00  3.517346e+00  3.161220e+01  3.384781e+01   25691.160000   
+
+               Class  
+count  284807.000000  
+mean        0.001727  
+std         0.041527  
+min         0.000000  
+25%         0.000000  
+50%         0.000000  
+75%         0.000000  
+max         1.000000  
+
+[8 rows x 31 columns]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>] <span class="comment">#正确显示中文</span></span><br><span class="line"><span class="comment">#绘制类别分布</span></span><br><span class="line">plt.figure()</span><br><span class="line">ax=sns.countplot(x=<span class="string">'Class'</span>,data=df)</span><br><span class="line">plt.title(<span class="string">'类别分布'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="./creditcard_fraud_analysis/output_6_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示交易笔数，欺诈交易笔数</span></span><br><span class="line">num=len(df)</span><br><span class="line">num_fraud=len(df[df.Class==<span class="number">1</span>])</span><br><span class="line">print(<span class="string">'交易笔数：'</span>,num)</span><br><span class="line">print(<span class="string">'欺诈交易笔数：'</span>,num_fraud)</span><br><span class="line">print(<span class="string">'欺诈交易比例：&#123;:.4f&#125;'</span>.format(num_fraud/num))</span><br></pre></td></tr></table></figure>
+<pre><code>交易笔数： 284807
+欺诈交易笔数： 492
+欺诈交易比例：0.0017
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#欺诈和正常交易可视化</span></span><br><span class="line">f,(ax1,ax2)=plt.subplots(<span class="number">2</span>,<span class="number">1</span>,sharex=<span class="literal">True</span>,figsize=(<span class="number">15</span>,<span class="number">8</span>))</span><br><span class="line">ax1.hist(df.Time[df.Class==<span class="number">1</span>],bins=<span class="number">50</span>,color=<span class="string">'deeppink'</span>)</span><br><span class="line">ax1.set_title(<span class="string">'诈骗交易'</span>)</span><br><span class="line">ax2.hist(df.Time[df.Class==<span class="number">0</span>],bins=<span class="number">50</span>,color=<span class="string">'deepskyblue'</span>)</span><br><span class="line">ax2.set_title(<span class="string">'正常交易'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'时间'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'交易次数'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="./creditcard_fraud_analysis/output_8_0.png" alt="png"></p>
+<p>由欺诈交易比例显然可以看出这是一个不平衡数据集，正常交易笔数远大于欺诈交易笔数。对于不平衡数据集而言，如果分类结果全部归为正常交易，那么分类准确率仍然能达到99%。虽然准确率很高，显然这样的模型没什么用处，泛化能力低，根本无法判断出哪些是欺诈交易。<br>因此需要在训练分类器之前对不平衡数据集进行处理。</p>
+<ul>
+<li><p>重新平衡数据集</p>
+<ul>
+<li>欠采样：从样本较多的类中抽取，仅保留这些样本点的一部分；</li>
+<li>过采样：复制少数类中的一些点，以增加其基数；</li>
+<li>生成合成数据：从少数类创建新的合成点，以增加其基数。</li>
+</ul>
+</li>
+<li>更改性能指标<ul>
+<li>混淆矩阵、Precision(查准率)、Recall(查全率)、F1score</li>
+<li>ROC曲线及AUC值  </li>
+</ul>
+</li>
+</ul>
+<p><strong>本文利用imblearn中的过采样方法SMOTE重新平衡数据集。</strong></p>
+<hr>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><ul>
+<li>由于amount特征中的数据与其他特征数据量级差距过大，对该特征数据进行标准化处理。</li>
+<li>采用tran_test_split()对训练集与测试集按7，3成比例进行划分。</li>
+<li>为保证测试结果的合理性，对训练集数据采用SMOTE进行过采样处理。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#对amount进行数据规范化</span></span><br><span class="line">df[<span class="string">'Amount_Norm'</span>]=StandardScaler().fit_transform(df[<span class="string">'Amount'</span>].values.reshape(<span class="number">-1</span>,<span class="number">1</span>))</span><br><span class="line"><span class="comment">#特征选择</span></span><br><span class="line">y=np.array(df.Class.tolist())</span><br><span class="line">df=df.drop([<span class="string">'Time'</span>,<span class="string">'Amount'</span>,<span class="string">'Class'</span>],axis=<span class="number">1</span>)</span><br><span class="line">X=df.as_matrix()</span><br><span class="line"><span class="comment">#划分训练集与测试集</span></span><br><span class="line">train_x,test_x,train_y,test_y=train_test_split(X,y,test_size=<span class="number">0.1</span>,random_state=<span class="number">33</span>)</span><br><span class="line"><span class="comment">#处理不平衡数据</span></span><br><span class="line"><span class="keyword">from</span> imblearn.over_sampling <span class="keyword">import</span> SMOTE</span><br><span class="line">sm=SMOTE(random_state=<span class="number">40</span>)</span><br><span class="line">train_x,train_y=sm.fit_sample(train_x,train_y)</span><br><span class="line">n_sample=train_y.shape[<span class="number">0</span>]</span><br><span class="line">n_neg_sample=train_y[train_y==<span class="number">0</span>].shape[<span class="number">0</span>]</span><br><span class="line">n_pos_sample=train_y[train_y==<span class="number">1</span>].shape[<span class="number">0</span>]</span><br><span class="line">print(<span class="string">'样本个数：&#123;&#125;;负样本率&#123;:.2%&#125;;正样本率&#123;:.2%&#125;'</span>.format(n_sample,n_pos_sample/n_sample,n_pos_sample/n_sample))</span><br></pre></td></tr></table></figure>
+<pre><code>样本个数：511788;负样本率50.00%;正样本率50.00%
+</code></pre><hr>
+<h2 id="构建模型"><a href="#构建模型" class="headerlink" title="构建模型"></a>构建模型</h2><h3 id="构建分类器"><a href="#构建分类器" class="headerlink" title="构建分类器"></a>构建分类器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#逻辑回归分类</span></span><br><span class="line">clf=LogisticRegression()</span><br><span class="line">clf.fit(train_x,train_y)</span><br><span class="line">predict_y=clf.predict(test_x)</span><br><span class="line"><span class="comment">#预测样本的置信分数</span></span><br><span class="line">score_y=clf.decision_function(test_x)</span><br></pre></td></tr></table></figure>
+<h3 id="结果显示"><a href="#结果显示" class="headerlink" title="结果显示"></a>结果显示</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义功能函数</span></span><br><span class="line"><span class="comment">#混淆矩阵可视化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_confusion_matrix</span><span class="params">(cm,classes,normalize=False,title=<span class="string">'Confusion matrix'</span>,cmap=plt.cm.Blues)</span>:</span></span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.imshow(cm,interpolation=<span class="string">'nearest'</span>,cmap=cmap)</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.colorbar()</span><br><span class="line">    tick_marks=np.arange(len(classes))</span><br><span class="line">    plt.xticks(tick_marks,classes,rotation=<span class="number">0</span>)</span><br><span class="line">    plt.yticks(tick_marks,classes)</span><br><span class="line"></span><br><span class="line">    thresh=cm.max()/<span class="number">2.0</span></span><br><span class="line">    <span class="keyword">for</span> i,j <span class="keyword">in</span> itertools.product(range(cm.shape[<span class="number">0</span>]),range(cm.shape[<span class="number">1</span>])):</span><br><span class="line">        plt.text(j,i,cm[i,j],</span><br><span class="line">                horizontalalignment=<span class="string">'center'</span>,</span><br><span class="line">                color=<span class="string">'white'</span> <span class="keyword">if</span> cm[i,j]&gt;thresh <span class="keyword">else</span> <span class="string">'black'</span>)</span><br><span class="line">        </span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.ylabel(<span class="string">'True label'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'Predicted label'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line"><span class="comment">#显示模型结果</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_metrics</span><span class="params">()</span>:</span></span><br><span class="line">    tp=cm[<span class="number">1</span>,<span class="number">1</span>]</span><br><span class="line">    fn=cm[<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">    fp=cm[<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">    tn=cm[<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">    print(<span class="string">'精确率：&#123;:.4f&#125;'</span>.format(tp/(tp+fp)))</span><br><span class="line">    print(<span class="string">'召回率：&#123;:.4f&#125;'</span>.format(tp/(tp+fn)))</span><br><span class="line">    print(<span class="string">'F1值：&#123;:.4f&#125;'</span>.format(<span class="number">2</span>*(tp/(tp+fp))*(tp/(tp+fn))/((tp/(tp+fp))+(tp/(tp+fn)))))</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制精确率-召回率曲线</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_precision_recall</span><span class="params">()</span>:</span></span><br><span class="line">    plt.step(recall,precision,color=<span class="string">'b'</span>,alpha=<span class="number">0.2</span>,where=<span class="string">'post'</span>)</span><br><span class="line">    plt.fill_between(recall,precision,step=<span class="string">'post'</span>,alpha=<span class="number">0.2</span>,color=<span class="string">'b'</span>)</span><br><span class="line">    plt.plot(recall,precision,linewidth=<span class="number">2</span>)</span><br><span class="line">    plt.xlim([<span class="number">0.0</span>,<span class="number">1.0</span>])</span><br><span class="line">    plt.ylim([<span class="number">0.0</span>,<span class="number">1.05</span>])</span><br><span class="line">    plt.xlabel(<span class="string">'召回率'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'精确率'</span>)</span><br><span class="line">    plt.title(<span class="string">'精确率-召回率 曲线'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#计算混淆矩阵</span></span><br><span class="line">cm=confusion_matrix(test_y,predict_y)</span><br><span class="line">class_names=[<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line"><span class="comment">#显示混淆矩阵</span></span><br><span class="line">plot_confusion_matrix(cm,classes=class_names,title=<span class="string">'逻辑回归模型的混淆矩阵'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="./creditcard_fraud_analysis/output_13_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示模型评估分数</span></span><br><span class="line">show_metrics()</span><br><span class="line"><span class="comment">#计算精确率，召回率并可视化</span></span><br><span class="line">precision,recall,thresholds=precision_recall_curve(test_y,score_y)</span><br><span class="line">plot_precision_recall()</span><br></pre></td></tr></table></figure>
+<pre><code>精确率：0.8409
+召回率：0.6167
+F1值：0.7115
+</code></pre><p><img src="./creditcard_fraud_analysis/output_14_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_curve ,auc</span><br><span class="line">y_pred1_prob = clf.predict_proba(test_x)[:, <span class="number">1</span>]  <span class="comment"># 阈值默认值为0.5</span></span><br><span class="line"></span><br><span class="line">fpr, tpr, thresholds = roc_curve(test_y,y_pred1_prob)</span><br><span class="line">roc_auc = auc(fpr,tpr)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制 ROC曲线</span></span><br><span class="line">plt.title(<span class="string">'ROC Curve'</span>)</span><br><span class="line">plt.plot(fpr, tpr, <span class="string">'b'</span>,label=<span class="string">'AUC = %0.4f'</span>% roc_auc)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.plot([<span class="number">0</span>,<span class="number">1</span>],[<span class="number">0</span>,<span class="number">1</span>],<span class="string">'r--'</span>)</span><br><span class="line">plt.xlim([<span class="number">-0.1</span>,<span class="number">1.0</span>])</span><br><span class="line">plt.ylim([<span class="number">-0.1</span>,<span class="number">1.01</span>])</span><br><span class="line">plt.ylabel(<span class="string">'True Positive Rate'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'False Positive Rate'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="./creditcard_fraud_analysis/output_15_0.png" alt="png"></p>
+<ul>
+<li>最终AUC的值达到0.9749，说明分类器的效果较好。</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/a1ddee89.html" rel="next" title="数据分析流程及代码实现笔记">
+                <i class="fa fa-chevron-left"></i> 数据分析流程及代码实现笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/0.html" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar01.jpg" alt="Stingzsp">
+            
+              <p class="site-author-name" itemprop="name">Stingzsp</p>
+              <div class="site-description motion-element" itemprop="description">苟日新 日日新 又日新</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/stingzsp" title="GitHub &rarr; https://github.com/stingzsp" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:stephenzh099@gmail.com" title="E-Mail &rarr; mailto:stephenzh099@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背"><span class="nav-number">2.</span> <span class="nav-text">项目背</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法选择"><span class="nav-number">3.</span> <span class="nav-text">算法选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理"><span class="nav-number">4.</span> <span class="nav-text">数据预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据探索分析（EDA）"><span class="nav-number">5.</span> <span class="nav-text">数据探索分析（EDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">6.</span> <span class="nav-text">特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建模型"><span class="nav-number">7.</span> <span class="nav-text">构建模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建分类器"><span class="nav-number">7.1.</span> <span class="nav-text">构建分类器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果显示"><span class="nav-number">7.2.</span> <span class="nav-text">结果显示</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stingzsp</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">38k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">35 分钟</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.15" zindex="-1" count="70" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.0.1"></script>
+
+  <script src="/js/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.0.1"></script>
+<script src="/js/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
