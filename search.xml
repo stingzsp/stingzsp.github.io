@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[比特币价格预测]]></title>
+    <url>%2F999954af.html</url>
+    <content type="text"><![CDATA[摘要分析2012年1月1日至2018年10月31日的比特币价格数据，并采用时间序列方法，构建自回归华东平均模型（ARMA模型），预测未来8个月比特币的价格走势。预测结果表明比特币将在8个月内降到4000美金左右，于实际比特币价格趋势吻合。 项目背景 项目来源：kaggle平台：https://www.kaggle.com/mczielinski/bitcoin-historical-data 比特币是运行时间最长，最着名的加密货币，由匿名中本聪于2009年首次作为开源发布。比特币作为数字交换的分散媒介，在公共分布式账本（区块链）中验证和记录交易，无需可信赖的记录保管机构或中央中介。事务块包含先前事务块的SHA-256加密哈希，因此被“链接”在一起，用作所有已发生事务的不可变记录。与市场上的任何货币/商品一样，比特币交易和金融工具很快跟随公众采用比特币并继续增长。这里包括以1分钟为间隔的历史比特币市场数据，用于交易发生的特定比特币交易所。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[XGBoost]]></title>
     <url>%2Fce8cbd0b.html</url>
     <content type="text"><![CDATA[XGBoost]]></content>
