@@ -152,10 +152,13 @@
 <meta property="og:site_name" content="Sting的笔记">
 <meta property="og:description" content="摘要分析2012年1月1日至2018年10月31日的比特币价格数据，并采用时间序列方法，构建自回归华东平均模型（ARMA模型），预测未来8个月比特币的价格走势。预测结果表明比特币将在8个月内降到4000美金左右，于实际比特币价格趋势吻合。  项目背景 项目来源：kaggle平台：https://www.kaggle.com/mczielinski/bitcoin-historical-data">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-10T14:54:20.080Z">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/0060lm7Tly1g2xqvyy619j30om0cs74z.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/0060lm7Tly1g2xqx2lfifj30wr0c7mxu.jpg">
+<meta property="og:updated_time" content="2019-05-11T14:28:34.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="比特币价格预测">
 <meta name="twitter:description" content="摘要分析2012年1月1日至2018年10月31日的比特币价格数据，并采用时间序列方法，构建自回归华东平均模型（ARMA模型），预测未来8个月比特币的价格走势。预测结果表明比特币将在8个月内降到4000美金左右，于实际比特币价格趋势吻合。  项目背景 项目来源：kaggle平台：https://www.kaggle.com/mczielinski/bitcoin-historical-data">
+<meta name="twitter:image" content="http://wx1.sinaimg.cn/large/0060lm7Tly1g2xqvyy619j30om0cs74z.jpg">
 
 
 
@@ -427,12 +430,24 @@
                 
               
 
-              <time title="创建时间：2019-05-10 22:12:21 / 修改时间：22:54:20" itemprop="dateCreated datePublished" datetime="2019-05-10T22:12:21+08:00">2019-05-10</time>
+              <time title="创建时间：2019-05-10 22:12:21" itemprop="dateCreated datePublished" datetime="2019-05-10T22:12:21+08:00">2019-05-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-11 22:28:34" itemprop="dateModified" datetime="2019-05-11T22:28:34+08:00">2019-05-11</time>
               
             
           </span>
@@ -467,7 +482,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">429</span>
+                <span title="本文字数">7.1k</span>
               
 
               
@@ -481,7 +496,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -509,6 +524,167 @@
 <blockquote>
 <p>比特币是运行时间最长，最着名的加密货币，由匿名中本聪于2009年首次作为开源发布。比特币作为数字交换的分散媒介，在公共分布式账本（区块链）中验证和记录交易，无需可信赖的记录保管机构或中央中介。事务块包含先前事务块的SHA-256加密哈希，因此被“链接”在一起，用作所有已发生事务的不可变记录。与市场上的任何货币/商品一样，比特币交易和金融工具很快跟随公众采用比特币并继续增长。这里包括以1分钟为间隔的历史比特币市场数据，用于交易发生的特定比特币交易所。</p>
 </blockquote>
+<h2 id="来源于kaggle项目描述"><a href="#来源于kaggle项目描述" class="headerlink" title="来源于kaggle项目描述"></a><strong>来源于kaggle项目描述</strong></h2><h2 id="算法选择（场景分析）"><a href="#算法选择（场景分析）" class="headerlink" title="算法选择（场景分析）"></a>算法选择（场景分析）</h2><p>比特币的价格是连续型的数值，可以采用<strong>回归分析</strong>和<strong>时间序列</strong>。比较一下两种算法的差异：</p>
+<ul>
+<li><strong>回归分析</strong><ul>
+<li>回归分研究的是应变量与自变量的相关性，然后通过通过自变量新的观察值来预测应变量。</li>
+<li>回归分析专注的是多变量与目标结果之间的分析，往往与时间无关。</li>
+</ul>
+</li>
+<li><strong>时间序列</strong><ul>
+<li>时间序列研究的是应变量与时间的相关性。</li>
+<li>时间序列关注时间变化，分析目标变量的趋势、周期、时间和不稳定因素等特征。</li>
+</ul>
+</li>
+</ul>
+<p>时间序列算法中有些经典模型，包含 <code>AR</code>、<code>MA</code>、<code>ARMA</code>、<code>ARIMA</code>。</p>
+<ul>
+<li>AR模型<ul>
+<li>AR英文全称<code>autogressive</code>，中文全称<code>自回归模型</code>。</li>
+<li>算法思想：通过过去若干时刻的点通过线性组合，加上白噪声预测未来时刻的点。</li>
+<li>AR(p)模型：<code>p</code>：自回归项数；采用过去时刻的p个点进行处理。</li>
+</ul>
+</li>
+<li>MA模型<ul>
+<li>MA英文全称<code>Moving Average</code>,中文全称 <code>滑动平均模型</code> </li>
+<li>算法思想：通过历史白噪声进行线性组合影响当前时刻点，描述自回归部分的误差累计。</li>
+<li>MA(q)模型：<code>q</code>：滑动平均项数。</li>
+</ul>
+</li>
+<li>ARMA模型<ul>
+<li>ARMA英文全称<code>Autogressive Moving Average</code>，中文全称<code>自回归移动平均模型</code>。</li>
+<li>ARMA(p,q)模型：<code>p</code>与<code>q</code>两个阶数</li>
+</ul>
+</li>
+<li>ARIMA模型<ul>
+<li>ARMA英文全称<code>Autoregressive Integrated Moving Average model</code> ， 中文全称<code>差分整合移动平均自回归模型</code>。</li>
+<li>ARIMA比ARMA多了差分的过程，作用是对不平稳数据进行差分平稳，在差分平稳后再建模。</li>
+<li>ARIMA(p,q,d)：<code>d</code>:差分阶数。</li>
+</ul>
+</li>
+</ul>
+<p>ARMA的API<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> statsmodels.tsa.arima_model <span class="keyword">import</span> ARMA</span><br></pre></td></tr></table></figure></p>
+<p>ARMA的参数</p>
+<ul>
+<li><code>ARMA(endog,order,exog=None)</code><ul>
+<li><code>endog</code>：待分析的变量（data）</li>
+<li><code>order</code>：代表p,q的值</li>
+<li><code>exog</code> ：外生变量，在经济机制内受外部因素影响<br>ARMA的判断准则</li>
+</ul>
+</li>
+<li>AIC准则，又称赤道准则，是衡量统计模型拟合好坏的一个标准，数值越小代表模型拟合得越好。</li>
+</ul>
+<hr>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>数据一共包含八个字段，具体含义如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字段</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Timestamp</td>
+<td style="text-align:center">日期</td>
+</tr>
+<tr>
+<td style="text-align:center">Open</td>
+<td style="text-align:center">开盘价</td>
+</tr>
+<tr>
+<td style="text-align:center">High</td>
+<td style="text-align:center">最高价</td>
+</tr>
+<tr>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">最低价</td>
+</tr>
+<tr>
+<td style="text-align:center">Close</td>
+<td style="text-align:center">收盘价</td>
+</tr>
+<tr>
+<td style="text-align:center">Volume_(BTC)</td>
+<td style="text-align:center">比特币成交量</td>
+</tr>
+<tr>
+<td style="text-align:center">Volume_(Currency)</td>
+<td style="text-align:center">成交金额</td>
+</tr>
+<tr>
+<td style="text-align:center">Weighted_Price</td>
+<td style="text-align:center">比特币平均价格</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#加载数据</span></span><br><span class="line">df=pd.read_csv(<span class="string">'./bitcoin_2012-01-01_to_2018-10-31.csv'</span>)</span><br><span class="line"><span class="comment">#把时间作为df的索引</span></span><br><span class="line">df.Timestamp=pd.to_datetime(df.Timestamp)</span><br><span class="line">df.index=df.Timestamp</span><br><span class="line"><span class="comment">#df.set_index(df.Timestamp)</span></span><br><span class="line"><span class="comment">#查看数据集</span></span><br><span class="line">print(df.info())</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+DatetimeIndex: 2497 entries, 2011-12-31 to 2018-10-31
+Data columns (total 8 columns):
+Timestamp            2497 non-null datetime64[ns]
+Open                 2494 non-null float64
+High                 2494 non-null float64
+Low                  2494 non-null float64
+Close                2494 non-null float64
+Volume_(BTC)         2494 non-null float64
+Volume_(Currency)    2494 non-null float64
+Weighted_Price       2494 non-null float64
+dtypes: datetime64[ns](1), float64(7)
+memory usage: 175.6 KB
+None
+</code></pre><p>发现Timestamp中有3天没有价格记录，用<code>dropna()</code>删除这3天的记录。</p>
+<hr>
+<h2 id="数据探索"><a href="#数据探索" class="headerlink" title="数据探索"></a>数据探索</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据探索</span></span><br><span class="line">print(df.head())</span><br></pre></td></tr></table></figure>
+<pre><code>            Timestamp      Open      High       Low     Close  Volume_(BTC)  \
+Timestamp                                                                     
+2011-12-31 2011-12-31  4.465000  4.482500  4.465000  4.482500     23.829470   
+2012-01-01 2012-01-01  4.806667  4.806667  4.806667  4.806667      7.200667   
+2012-01-02 2012-01-02  5.000000  5.000000  5.000000  5.000000     19.048000   
+2012-01-03 2012-01-03  5.252500  5.252500  5.252500  5.252500     11.004660   
+2012-01-04 2012-01-04  5.200000  5.223333  5.200000  5.223333     11.914807   
+
+            Volume_(Currency)  Weighted_Price  
+Timestamp                                      
+2011-12-31         106.330084        4.471603  
+2012-01-01          35.259720        4.806667  
+2012-01-02          95.240000        5.000000  
+2012-01-03          58.100651        5.252500  
+2012-01-04          63.119578        5.208159  
+</code></pre><p>数据可视化查看比特币的历史走势，按照不同时间维度将数据压缩，并做可视化呈现。<code>Weighted_Price</code>是目标变量，对应比特币的每天价格；压缩后对应每月、每季度、每年的比特币平均价格。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#按照月份、季度与年份来进行统计</span></span><br><span class="line">df_month=df.resample(<span class="string">'M'</span>).mean()</span><br><span class="line">df_Q=df.resample(<span class="string">'Q-DEC'</span>).mean()</span><br><span class="line">df_year=df.resample(<span class="string">'A-DEC'</span>).mean()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#按照天，月，季度，年来显示比特币的走势</span></span><br><span class="line">fig=plt.figure(figsize=[<span class="number">15</span>,<span class="number">7</span>])</span><br><span class="line"><span class="comment">#正常显示中文标签</span></span><br><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>]</span><br><span class="line">plt.suptitle(<span class="string">'比特币金额（美金）'</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.subplot(<span class="number">221</span>)</span><br><span class="line">plt.plot(df.Weighted_Price,<span class="string">'-'</span>,label=<span class="string">'按天'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.subplot(<span class="number">222</span>)</span><br><span class="line">plt.plot(df_month.Weighted_Price,<span class="string">'-'</span>,label=<span class="string">'按月'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.subplot(<span class="number">223</span>)</span><br><span class="line">plt.plot(df_Q.Weighted_Price,<span class="string">'-'</span>,label=<span class="string">'按季度'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.subplot(<span class="number">224</span>)</span><br><span class="line">plt.plot(df_year.Weighted_Price,<span class="string">'-'</span>,label=<span class="string">'按年'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx1.sinaimg.cn/large/0060lm7Tly1g2xqvyy619j30om0cs74z.jpg" alt="png"></p>
+<hr>
+<h2 id="构建模型"><a href="#构建模型" class="headerlink" title="构建模型"></a>构建模型</h2><p>设置p,q参数：起初并不知道p,q取何值时模型预测效果更好。因此将其设定为一个区间范围，通过循环计算不同参数的AIC值，选择AIC值最优的参数作为最优模型。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置参数范围</span></span><br><span class="line">ps=range(<span class="number">0</span>,<span class="number">4</span>)</span><br><span class="line">qs=range(<span class="number">0</span>,<span class="number">4</span>)</span><br><span class="line">parameters=product(ps,qs)</span><br><span class="line">parameters_list=list(parameters)</span><br><span class="line"><span class="comment">#寻找最优ARMA模型参数，即best_aic最小</span></span><br><span class="line">results=[]</span><br><span class="line">best_aic=float(<span class="string">"inf"</span>) <span class="comment">#正无穷</span></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> parameters_list:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        model=ARMA(df_month.Weighted_Price,order=(param[<span class="number">0</span>],param[<span class="number">1</span>])).fit()</span><br><span class="line">    <span class="keyword">except</span> ValueError:</span><br><span class="line">            print(<span class="string">"参数错误："</span>,param)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    aic=model.aic</span><br><span class="line">    <span class="keyword">if</span> aic &lt; best_aic:</span><br><span class="line">            best_model=model</span><br><span class="line">            best_aic=aic</span><br><span class="line">            best_param=param</span><br><span class="line">    results.append([param,model.aic])</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出最优模型</span></span><br><span class="line">result_table=pd.DataFrame(results)</span><br><span class="line">result_table.columns=[<span class="string">'parameters'</span>,<span class="string">'aic'</span>]</span><br><span class="line">print(<span class="string">"最优模型：\n"</span>,best_model.summary())</span><br></pre></td></tr></table></figure></p>
+<pre><code>参数错误： (0, 2)
+最优模型：
+                               ARMA Model Results                              
+==============================================================================
+Dep. Variable:         Weighted_Price   No. Observations:                   83
+Model:                     ARMA(1, 1)   Log Likelihood                -688.761
+Method:                       css-mle   S.D. of innovations            957.764
+Date:                Mon, 15 Apr 2019   AIC                           1385.522
+Time:                        14:42:56   BIC                           1395.198
+Sample:                    12-31-2011   HQIC                          1389.409
+                         - 10-31-2018                                         
+========================================================================================
+                           coef    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                 2103.6096   1567.542      1.342      0.183    -968.717    5175.936
+ar.L1.Weighted_Price     0.9251      0.042     22.042      0.000       0.843       1.007
+ma.L1.Weighted_Price     0.2681      0.116      2.311      0.023       0.041       0.495
+                                    Roots                                    
+=============================================================================
+                 Real           Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+AR.1            1.0809           +0.0000j            1.0809            0.0000
+MA.1           -3.7302           +0.0000j            3.7302            0.5000
+-----------------------------------------------------------------------------
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#比特币预测</span></span><br><span class="line">df_month2=df_month[[<span class="string">'Weighted_Price'</span>]]</span><br><span class="line">date_list=[datetime(<span class="number">2018</span>,<span class="number">11</span>,<span class="number">30</span>),datetime(<span class="number">2018</span>,<span class="number">12</span>,<span class="number">31</span>),datetime(<span class="number">2019</span>,<span class="number">1</span>,<span class="number">31</span>),datetime(<span class="number">2019</span>,<span class="number">2</span>,<span class="number">28</span>),datetime(<span class="number">2019</span>,<span class="number">3</span>,<span class="number">31</span>),</span><br><span class="line">          datetime(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">30</span>),datetime(<span class="number">2019</span>,<span class="number">5</span>,<span class="number">31</span>),datetime(<span class="number">2019</span>,<span class="number">6</span>,<span class="number">30</span>)]</span><br><span class="line">future=pd.DataFrame(index=date_list,columns=df_month.columns)</span><br><span class="line">df_month2=pd.concat([df_month2,future])</span><br><span class="line">df_month2[<span class="string">'forecast'</span>]=best_model.predict(start=<span class="number">0</span>,end=<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#比特币预测结果显示</span></span><br><span class="line">plt.figure(figsize=[<span class="number">20</span>,<span class="number">7</span>])</span><br><span class="line">df_month2.Weighted_Price.plot(label=<span class="string">'实际金额'</span>)</span><br><span class="line">df_month2.forecast.plot(color=<span class="string">'r'</span>,ls=<span class="string">'--'</span>,label=<span class="string">'预测金额'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.title(<span class="string">'比特币金额（月）'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'时间'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'美金'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx2.sinaimg.cn/large/0060lm7Tly1g2xqx2lfifj30wr0c7mxu.jpg" alt="png"></p>
+<p>根据结果可以看出，8个月后的时间内，比特币的价格会触底到4000美金左右，而比特币的实际价格确实降低到了4000美金一以下。</p>
 
       
     </div>
@@ -686,7 +862,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">2.</span> <span class="nav-text">项目背景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">2.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#来源于kaggle项目描述"><span class="nav-number">3.</span> <span class="nav-text">来源于kaggle项目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法选择（场景分析）"><span class="nav-number">4.</span> <span class="nav-text">算法选择（场景分析）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理"><span class="nav-number">5.</span> <span class="nav-text">数据预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据探索"><span class="nav-number">6.</span> <span class="nav-text">数据探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建模型"><span class="nav-number">7.</span> <span class="nav-text">构建模型</span></a></li></ol></div>
             
 
           </div>
@@ -721,7 +897,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">29k</span>
+    <span title="站点总字数">35k</span>
   
 
   
@@ -732,7 +908,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">26 分钟</span>
+    <span title="站点阅读时长">32 分钟</span>
   
 </div>
 
